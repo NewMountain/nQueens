@@ -4,12 +4,24 @@ import Data.List
 
 
 nQueens :: Int -> [[Int]]
-nQueens size =
-    permutations [1..size]
+nQueens size = 
+    filter diagTest $ permutations [1..size]
+
+
+diagTest :: [Int] -> Bool
+diagTest ls = 
+    and $ northEast ++ southEast
+    where
+        northEast = checkCoords $ zipWith (+) ls [1..]
+        southEast = checkCoords $ zipWith (+) (reverse ls) [1..]
+    
+
+
+checkCoords :: [Int] -> [Bool]
+checkCoords xs = 
+    map ((==1) . snd) [ (c, length g) | g@(c:_) <- group $ sort xs]
 
 
 main :: IO ()
-main = do
-    putStrLn "What size board would you like to solve for?"
-    size <- readLn
-    print (size :: Int)
+main = 
+    print $ map (length . nQueens) [1..11]
