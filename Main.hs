@@ -13,13 +13,12 @@ diagTest ls =
     and $ northEast ++ southEast
     where
         northEast = checkCoords $ zipWith (+) ls [1..]
-        southEast = checkCoords $ zipWith (+) (reverse ls) [1..]
-    
+        southEast = checkCoords $ zipWith (+) (reverse ls) [1..]    
 
 
 checkCoords :: [Int] -> [Bool]
 checkCoords xs = 
-    map ((==1) . snd) [ (c, length g) | g@(c:_) <- group $ sort xs]
+    map ((==1) . length) $ group $ sort xs
 
 
 main :: IO ()
