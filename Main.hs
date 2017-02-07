@@ -10,15 +10,9 @@ nQueens size =
 
 diagTest :: [Int] -> Bool
 diagTest ls = 
-    and $ northEast ++ southEast
+    and . concat $ [dChk, dChk . reverse] <*> [ls]
     where
-        northEast = checkCoords $ zipWith (+) ls [1..]
-        southEast = checkCoords $ zipWith (+) (reverse ls) [1..]    
-
-
-checkCoords :: [Int] -> [Bool]
-checkCoords xs = 
-    map ((==1) . length) $ group $ sort xs
+        dChk xs = map ((==1) . length) $ group $ sort $ zipWith (+) xs [1..]
 
 
 main :: IO ()
