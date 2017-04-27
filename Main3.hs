@@ -3,14 +3,15 @@ module Lib
     ) where
 
 import Data.List
+import qualified Data.Vector as V
 import qualified System.IO.Streams as Streams
 
 
-nQueens :: Int -> IO [[Int]]
+nQueens :: Int -> IO (V.Vector [Int])
 nQueens size = 
     Streams.fromList (permutations [1..size]) >>=
     Streams.filter diagTest >>=
-    Streams.toList
+    Streams.toVector
 
 
 diagTest :: [Int] -> Bool
@@ -22,5 +23,5 @@ diagTest ls =
 
 someFunc :: IO ()
 someFunc = 
-    length <$> nQueens 11 >>= print
+    V.length <$> nQueens 11 >>= print
 
